@@ -18,6 +18,11 @@ Covering process is governed by two key parameters: *resolution* and *gain*. The
 ### 3. Clustering
 During this operation, projected points from the high-dimensional space are grouped into clusters within each bin. These clusters become nodes in the TDA graph, representing distincs data regions. Employing techniques like hierarchical clustering or k-means, this process identifies local patterns and relationships, forming a topological network that reveals the dataset underlying structure. 
 
+---
+
+## Tuning of Cover parameters
+
+
 
 
 
