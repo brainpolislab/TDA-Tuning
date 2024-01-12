@@ -6,7 +6,7 @@ Topological Data Analysis (TDA) is an advanced approach to data analysis grounde
 ## Mapper Algorithm
 The Mapper algorithm plays a crucial role in TDA. Rooted in algebraic topology, Mapper is designed to reveal the Underlying structure of high-dimensional data. Using a formalized process that constructs *simplicial complex*, Mapper transforms raw data into a simplified representation, preserving essential topological information. This formal approach ensures a systematic exploration of data patterns, enhancing our understanding of intrinsic shapes and connections. 
 
-![Mapper Algorithm Pipeline](./Images/Mapper Algorithm.png)
+![Mapper Algorithm Pipeline](./Images/Mapper_Algorithm.png)
 
 
 
