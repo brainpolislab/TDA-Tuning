@@ -31,7 +31,7 @@ _b. Grid search:_ the subsequent steps are carried out during each iteration of 
   * Graph distances computation and/or topological properties evaluation
   * Average on the total of bootstrapped graphs
 
-    ![Hyperparameter Tuning Pipelin](./Images/hyperparameter_tuning.pdf)
+    ![Hyperparameter Tuning Pipelin](./Images/hyperparameter_tuning.png)
 
 _c. Matrix generation:_ fill matrices with the average result obtained at each iteration of the grid search  
 _d. Matrix analysis and parameters combination selection:_ selection of the optimal combination of cover parameters after an accurate matrix analysis
