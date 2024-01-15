@@ -26,9 +26,13 @@ The parameters governing the Covering operation, namely _resolution_ and _gain_,
 **Pipeline**  
 _a. Parameter range definition:_ definition of two ranges for both _resolution_ and _gain_ parameters  
 _b. Grid search:_ the subsequent steps are carried out during each iteration of the grid search  
-  * Bootstrapping
+  * Bootstrapping (with or without replacement)
   * TDA graph construction (using Mapper algorithm)
   * Graph distances computation and/or topological properties evaluation
+  * Average on the total of bootstrapped graphs     
+
+_c. Matrix generation:_ fill matrices with the average result obtained at each iteration of the grid search  
+_d. Matrix analysis and parameters combination selection:_ selection of the optimal combination of cover parameters after an accurate matrix analysis
 
 
 
