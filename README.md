@@ -21,7 +21,7 @@ During this operation, projected points from the high-dimensional space are grou
 ---
 
 ## Tuning of Cover parameters
-The parameters governing the Covering operation, namely _resolution_ and _gain_, significantly influence the ultimate representation of the TDA graph. An optimal configuration of these parameters is crucial for enhancing the quality of the graph representation. To achieve this, a method is introduced herein, integrating bootstrapping and grid search techniques. This approach aims to systematically explore various configurations of the covering parameters, with the objective of identifying the most suitable settings that yield an improved TDA graph representation.
+The parameters governing the Covering operation, namely _resolution_ and _gain_, significantly influence the ultimate representation of the TDA graph. An optimal configuration of these parameters is crucial for enhancing the quality of the graph representation. To achieve this, a method is introduced herein, integrating bootstrapping and grid search techniques. This approach aims to systematically explore various configurations of the covering parameters, with the objective of identifying the most suitable settings that yield an improved TDA graph representation. Additionally, it is crucial to underscore that this approach does not depend on specific outcomes.
 
 ### Pipeline  
 _a. Parameter range definition:_ definition of two ranges of values for both _resolution_ and _gain_ parameters  
