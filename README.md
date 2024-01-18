@@ -47,3 +47,8 @@ Upon the completion of matrix construction, the subsequent step entails the sele
 
 Please note that, for the latter two strategies, an optimal normalization of the final matrices is imperative to facilitate the combination of matrices associated with different metrics.
 
+---
+
+# fMRI data example
+
+
