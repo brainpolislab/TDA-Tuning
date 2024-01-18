@@ -49,6 +49,6 @@ Please note that, for the latter two strategies, an optimal normalization of the
 
 ---
 
-# fMRI data example
+## fMRI data example
 
 
