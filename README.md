@@ -28,27 +28,15 @@ _a. Parameter range definition:_ definition of two ranges of values for both _re
 _b. Grid search:_ the subsequent steps are carried out during each iteration of the grid search  
   * Bootstrapping (with or without replacement)
   * TDA graph construction (using Mapper algorithm)
-  * Graph distances computation and/or topological properties evaluation
+  * Graph distances computation
   * Average on the total of bootstrapped graphs
 
-    ![Hyperparameter Tuning Pipelin](./Images/hyperparameter_tuning.jpeg)
+    ![Hyperparameter Tuning Pipeline](./Images/hyperparameter_tuning.jpeg)
 
 _c. Matrix generation:_ fill matrices with the average result obtained at each iteration of the grid search  
 _d. Matrix analysis and parameters combination selection:_ selection of the optimal combination of cover parameters after an accurate matrix analysis
 
-### Matrix analysis and Cover parameters combination selection
-Upon the completion of matrix construction, the subsequent step entails the selection of the optimal combination of _resolution_ and _gain_ parameters. At this point, various strategies may be considered:
-* **Stability strategy**  
-  This approach entails the selection of graph distance metrics. In this scenario, the ultimate matrix is assembled utilizing the average graph distance metric computed during each iteration of the grid search. The optimal combination of Cover parameters is determined by the one that yields the lowest score in the matrix. This implies that, with this specific set of parameters, the graph representation remains **_stable_**.
-* **Topological properties strategy**  
-  In this instance, the metric of interest is one or more topological properties selected by the user. The aim in this scenario can be either to maximize or minimize the identified property. In the event of multiple topological properties, various result matrices can be generated. For instance, a singular comprehensive matrix may be compiled by averaging all the properties, or individual matrices may be created for each property. Ultimately, the optimal combination is determined by the highest or lowest score, contingent upon the user's choice of maximizing or minimizing the property of interest.
-* **Composite index strategy**  
-  This strategy merges the two approaches delineated above. In this instance, distance metrics and matrices representing topological properties are integrated to derive a final matrix of scores. This final matrix serves as the basis for selecting the optimal combination of Cover parameters.
-
-Please note that, for the latter two strategies, an optimal normalization of the final matrices is imperative to facilitate the combination of matrices associated with different metrics.
-
----
-
-## fMRI data example
+#### Cover parameters combination selection
+The most appropriate parameter configuration is the one that yields the lowest score within the final matrix. A smaller value signifies a more robust graph representation, especially when considering the NetSimile distance as the metric for graph distance. A minimal score indicates that the topological features remain consistent across various graphs constructed with the same Cover parameters but on different datasets, thanks to the bootstrapping methodology employed.
 
 
