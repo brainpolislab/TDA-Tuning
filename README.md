@@ -6,7 +6,7 @@ Topological Data Analysis (TDA) is an advanced approach to data analysis grounde
 ## Mapper Algorithm
 The Mapper algorithm plays a crucial role in TDA. Rooted in algebraic topology, Mapper is designed to reveal the Underlying structure of high-dimensional data. Using a formalized process that constructs *simplicial complex*, Mapper transforms raw data into a simplified representation, preserving essential topological information. This formal approach ensures a systematic exploration of data patterns, enhancing our understanding of intrinsic shapes and connections. 
 
-![Mapper Algorithm Scheme](./Images/Mapper_Algorithm.png)
+![Mapper Algorithm Scheme](./images/Mapper_Algorithm.png)
 
 ### 1. Filtering
 This operation serves as the initial stage in the algorithm, where it transforms the original data into a format suitable for further topological analysis. In this process, a filter function, also called lens function is applied to the dataset, projecting the data points from a high-dimensional representation to a smaller one. The choice of the filter function depends on the specific characteristics and objective of the analysis, as it aims to capture essential features or attribute of the data.
@@ -31,7 +31,7 @@ _b. Grid search:_ the subsequent steps are carried out during each iteration of 
   * Graph distances computation
   * Average on the total of bootstrapped graphs
 
-    ![Hyperparameter Tuning Pipeline](./Images/hyperparameter_tuning.jpeg)
+    ![Hyperparameter Tuning Pipeline](./images/hyperparameter_tuning.jpeg)
 
 _c. Matrix generation:_ fill matrices with the average result obtained at each iteration of the grid search  
 _d. Matrix analysis and parameters combination selection:_ selection of the optimal combination of cover parameters after an accurate matrix analysis
