@@ -3,6 +3,7 @@ import pandas as pd
 import networkx as nx
 import random
 import kmapper as km
+import netrd
 
 from kmapper import KeplerMapper, Cover
 from sklearn.cluster import DBSCAN
@@ -152,6 +153,30 @@ class CoverTuning():
                 matrix[i,j] = dist
 
         return matrix
+    
+    def graph_properties_stats(self, res, gain):
+        
+        bootstrap_samples = self.get_bootstrap_sample()
+        graph = self.create_tda_graph(bootstrap_samples[0], res, gain)
+
+        # Graph properties
+        graph_properties = netrd.distance.netsimile.feature_extraction(graph)
+        graph_properties_signature = netrd.distance.netsimile.graph_signature(graph_properties)
+
+        graph_properties_stats = graph_properties_signature.reshape((7,5))
+        graph_properties_stats = graph_properties_stats.T
+
+        row_names = ['mean', 'median', 'std', 'skewness', 'kurtosis']
+        col_names = ['node degree', 'clustering coefficient', 'average degree of neighborhood', 
+                     'average clustering coefficient of neighborhood', 'number of edges in the neighborhood', 
+                     'number of outgoing edges from the neighborhood', 'number of neighbors of neighbors (not in neighborhood)']
+        
+        graph_properties_stats_df = pd.DataFrame(graph_properties_stats, columns=col_names, index=row_names)
+
+        return graph_properties_stats_df
+
+
+
 
 
 
