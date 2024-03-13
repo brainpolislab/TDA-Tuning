@@ -155,9 +155,17 @@ class CoverTuning():
         return matrix
     
     def graph_properties_stats(self, res, gain):
-        
-        bootstrap_samples = self.get_bootstrap_sample()
-        graph = self.create_tda_graph(bootstrap_samples[0], res, gain)
+        """
+        Calculates statistical properties of a TDA graph based on specified Cover parameters.
+
+        Parameters:
+        - res (float): The resolution parameter determining the size of bins in the Cover
+        - gain (int): The gain parameter determining the overlap between bins in the Cover
+
+        Returns:
+        - pd.DataFrame: A DataFrame containing the statistical properties of the TDA graph
+        """
+        graph = self.create_tda_graph(self.data, res, gain)
 
         # Graph properties
         graph_properties = netrd.distance.netsimile.feature_extraction(graph)
