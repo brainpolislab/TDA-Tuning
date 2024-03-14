@@ -154,7 +154,15 @@ class CoverTuning():
 
         return matrix
     
-    def graph_properties_stats(self, res, gain):
+class GraphProperties(CoverTuning):
+    def __init__(self, data, projector, res, gain, seed):
+        super().__init__(data, projector, None, None, None, seed)
+        self.data = data
+        self.projector = projector
+        self.res = res
+        self.gain = gain
+        self.seed = seed
+    def graph_properties_stats(self):
         """
         Calculates statistical properties of a TDA graph based on specified Cover parameters.
 
@@ -165,7 +173,7 @@ class CoverTuning():
         Returns:
         - pd.DataFrame: A DataFrame containing the statistical properties of the TDA graph
         """
-        graph = self.create_tda_graph(self.data, res, gain)
+        graph = self.create_tda_graph(self.data, self.res, self.gain)
 
         # Graph properties
         graph_properties = netrd.distance.netsimile.feature_extraction(graph)
