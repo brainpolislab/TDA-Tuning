@@ -143,7 +143,7 @@ class CoverTuning():
                 # Graph creation
                 graph_list = []
                 for k in range(0, len(bootstrap_samples)):
-                    graph = self.create_tda_graph(bootstrap_samples[k], res_current, gain_current)
+                    graph = self.create_tda_graph(bootstrap_samples[k], gain_current, res_current)
                     graph_list.append(graph)
 
                 # Graph distance (NetSimile)
@@ -162,6 +162,7 @@ class GraphProperties(CoverTuning):
         self.res = res
         self.gain = gain
         self.seed = seed
+
     def graph_properties_stats(self):
         """
         Calculates statistical properties of a TDA graph based on specified Cover parameters.
@@ -173,7 +174,7 @@ class GraphProperties(CoverTuning):
         Returns:
         - pd.DataFrame: A DataFrame containing the statistical properties of the TDA graph
         """
-        graph = self.create_tda_graph(self.data, self.res, self.gain)
+        graph = self.create_tda_graph(self.data, self.gain, self.res)
 
         # Graph properties
         graph_properties = netrd.distance.netsimile.feature_extraction(graph)

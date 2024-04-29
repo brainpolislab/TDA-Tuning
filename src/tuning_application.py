@@ -15,8 +15,8 @@ data_1 = pd.read_csv(data_dir + 'file_name')
 data_2 = pd.read_csv(data_dir + 'file_name')
 
 # Define Cover parameters ranges
-res_range = [0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75]
-gain_range = [10,15,20,25,30,35,40,45,50]
+gain_range = [0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75]
+res_range = [10,15,20,25,30,35,40,45,50]
 
 ## COVER PARAMETERS TUNING #####################################################################################################################
 # Data 1
