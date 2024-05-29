@@ -22,19 +22,22 @@ During this operation, projected points from the high-dimensional space are grou
 The parameters governing the Covering operation, namely _resolution_ and _gain_, significantly influence the ultimate representation of the TDA graph. An optimal configuration of these parameters is crucial for enhancing the quality of the graph representation. To achieve this, a method is introduced herein, integrating bootstrapping and grid search techniques. This approach aims to systematically explore various configurations of the covering parameters, with the objective of identifying the most suitable settings that yield an improved TDA graph representation. Additionally, it is crucial to underscore that this approach does not depend on specific outcomes.
 
 ### Pipeline  
-_a. Parameter range definition:_ definition of two ranges of values for both _resolution_ and _gain_ parameters  
-_b. Grid search:_ the subsequent steps are carried out during each iteration of the grid search  
-  * Bootstrapping (with or without replacement)
+_a. Parameter ranges definition:_ initially, two ranges of values are defined for both resolution and gain parameters  
+_b. Grid search:_ subsequent procedures are executed iteratively within each iteration of the grid search process:  
+  * Bootstrapping (without replacement)
   * TDA graph construction (using Mapper algorithm)
-  * Graph distances computation
+  * Graph distance metric (Netsimile) and clustering coefficient computation
   * Average on the total of bootstrapped graphs
 
     ![Hyperparameter Tuning Pipeline](./images/hyperparameter_tuning_scheme.jpeg)
 
-_c. Matrix generation:_ fill matrices with the average result obtained at each iteration of the grid search  
-_d. Matrix analysis and parameters combination selection:_ selection of the optimal combination of cover parameters after an accurate matrix analysis
+_c. Matrix generation:_ two matrices are filled with the average results obtained at each iteration of the grid search  
+_d. Matrix integration:_ Netsimile and clustering coefficient matrices are merged together to get a final score matrix  
+_e. Matrix analysis and parameters combination selection:_ selection of the optimal combination of Cover parameters after an accurate matrix analysis  
 
 #### Cover parameters combination selection
-The most appropriate parameter configuration is the one that yields the lowest score within the final matrix. A smaller value signifies a more robust graph representation, especially when considering the NetSimile distance as the metric for graph distance. A minimal score indicates that the topological features remain consistent across various graphs constructed with the same Cover parameters but on different datasets, thanks to the bootstrapping methodology employed.
-
+After completing the grid search, two matrices—Netsimile distances and average clustering coefficients—were generated. These matrices were combined into a unified matrix, $M$:
+$$M = \frac{{M_{Netsimile} + M_{Clustering}}}{2}$$
+Here, $M_{Netsimile}$ is the distance matrix, and $M_{Clustering}$ is the clustering coefficient matrix. They were scaled and transformed for comparability before combining. The optimal resolution and gain parameters were identified from $M$ by selecting the lowest value, indicating stable topological properties and a good clustering coefficient. This selection was further validated through qualitative assessment of the graph's visual coherence and structural integrity.  
+This method, rooted in quantitative evaluations of topological features via bootstrapping and grid search, provides a robust approach for parameter configuration selection.
 
