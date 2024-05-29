@@ -4,49 +4,44 @@ import warnings
 
 from tda_cover_parameters_tuning import CoverTuning
 from umap.umap_ import UMAP
-from sklearn.manifold import TSNE  
+from sklearn.manifold import TSNE
+from sklearn.decomposition import PCA
 
 warnings.filterwarnings("ignore")
+seed_value = 27
 
 ## LOAD DATA ####################################################################################################################################
 data_dir = 'your data directory here'
 
-data_1 = pd.read_csv(data_dir + 'file_name')
-data_2 = pd.read_csv(data_dir + 'file_name')
+data = pd.read_csv(data_dir + 'file_name')
 
 # Define Cover parameters ranges
-gain_range = [0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75]
-res_range = [10,15,20,25,30,35,40,45,50]
+gain_range = [0.30, 0.40, 0.50, 0.60, 0.70, 0.80]
+res_range = [10, 20, 30, 40, 50, 60]
+
+# Define number of bootstrap samples
+n_bootstrap = 5
 
 ## COVER PARAMETERS TUNING #####################################################################################################################
-# Data 1
-cover_tuning_umap_1 = CoverTuning(data=data_1, projector=UMAP, 
+cover_tuning_umap = CoverTuning(data=data, projector=UMAP, 
                            res_range=res_range, gain_range=gain_range, 
-                           n_bootstrap=5, seed_value=42)
+                           n_bootstrap=n_bootstrap, seed_value=seed_value)
 
-cover_tuning_tsne_1 = CoverTuning(data=data_1, projector=TSNE, 
+cover_tuning_pca = CoverTuning(data=data, projector=PCA, 
                            res_range=res_range, gain_range=gain_range, 
-                           n_bootstrap=5, seed_value=42)
+                           n_bootstrap=n_bootstrap, seed_value=seed_value)
 
-matrix_distance_results_umap_1 = cover_tuning_umap_1.grid_search()
-matrix_distance_results_tsne_1 = cover_tuning_tsne_1.grid_search()
+# NetSimile metric
+matrix_distance_results_umap_netsimile = cover_tuning_umap.grid_search(metric='netsimile')
+matrix_distance_results_pca_netsimile = cover_tuning_pca.grid_search(metric='netsimile')
 
-# Data 2
-cover_tuning_umap_2 = CoverTuning(data=data_2, projector=UMAP, 
-                           res_range=res_range, gain_range=gain_range, 
-                           n_bootstrap=5, seed_value=42)
-
-cover_tuning_tsne_2 = CoverTuning(data=data_2, projector=TSNE,
-                            res_range=res_range, gain_range=gain_range, 
-                            n_bootstrap=5, seed_value=42)
-
-matrix_distance_results_umap_2 = cover_tuning_umap_2.grid_search()
-matrix_distance_results_tsne_2 = cover_tuning_tsne_2.grid_search()
+# Clustering metric
+matrix_avg_clustering_umap = cover_tuning_umap.grid_search(metric='clustering')
+matrix_avg_clustering_pca = cover_tuning_pca.grid_search(metric='clustering')
 
 ## SAVE RESULTS ################################################################################################################################
-np.savetxt('matrix_netsimile_umap.csv', matrix_distance_results_umap_1, delimiter=',')
-np.savetxt('matrix_netsimile_tsne.csv', matrix_distance_results_tsne_1, delimiter=',')
-np.savetxt('matrix_netsimile_umap.csv', matrix_distance_results_umap_2, delimiter=',')
-np.savetxt('matrix_netsimile_tsne.csv', matrix_distance_results_tsne_2, delimiter=',')
+np.savetxt('matrix_netsimile_umap.csv', matrix_distance_results_umap_netsimile, delimiter=',')
+np.savetxt('matrix_netsimile_pca.csv', matrix_distance_results_pca_netsimile, delimiter=',')
 
-
+np.savetxt('matrix_clustering_umap.csv', matrix_avg_clustering_umap, delimiter=',')
+np.savetxt('matrix_clustering_pca.csv', matrix_avg_clustering_pca, delimiter=',')

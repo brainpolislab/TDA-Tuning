@@ -7,10 +7,8 @@ import netrd
 
 from kmapper import KeplerMapper, Cover
 from sklearn.cluster import DBSCAN
-from netrd.distance import NetSimile
-from tmap.tda.utils import optimize_dbscan_eps
 
-class CoverTuning():
+class CoverTuning:
     """
     A class for tuning Cover parameters in TDA Mapper using NetSimile as graph distance metric.
     
@@ -49,7 +47,7 @@ class CoverTuning():
         graph = self.mapper.map(
             lens, X=x,
             cover=Cover(perc_overlap=perc_overlap, n_cubes=n_cubes),
-            clusterer=DBSCAN(eps=optimize_dbscan_eps(x, threshold=95), min_samples=2)
+            clusterer=DBSCAN(metric='euclidean', min_samples=5, eps=2)
         )
 
         return km.adapter.to_nx(graph)
@@ -92,36 +90,34 @@ class CoverTuning():
 
         Returns:
         - float: The average distance between graphs based on NetSimile
-        """
-        distance = {}
-        netsimile = NetSimile()
-
+        """        
+        distance = []
         n_graphs = len(graph_list)
 
-        def avg_distance(distances):
-            dist_values = list(distances.values())
-            return sum(dist_values) / len(dist_values)
-        
         for i in range(0, n_graphs):
             for j in range(i+1, n_graphs):
+                distance.append(netrd.distance.NetSimile().dist(graph_list[i], graph_list[j]))
 
-                # ij distance
-                dist_key_ij = f'd{i+1}{j+1}'
-                dist_ij_netsimile = netsimile.dist(graph_list[i], graph_list[j])
+        distance = np.array(distance)
+        return np.mean(distance)
+    
+    def clustering_metric(self, graph_list):
+        """
+        Computes the average clustering coefficient of the input graphs.
 
-                # ji distance
-                dist_key_ji = f'd{j+1}{i+1}'
-                dist_ji_netsimile = netsimile.dist(graph_list[j], graph_list[i])
+        Parameters:
+        - graph_list (list): A list of NetworkX graphs to compute clustering coefficients for
 
-                if dist_ij_netsimile == dist_ji_netsimile:
-                    distance[dist_key_ij] = dist_ij_netsimile
-                else:
-                    distance[dist_key_ij] = dist_ij_netsimile
-                    distance[dist_key_ji] = dist_ji_netsimile
+        Returns:
+        - float: The average clustering coefficient of the input graphs
+        """
+        clustering_coefficients = []
+        for graph in graph_list:
+            clustering_coefficients.append(nx.average_clustering(graph))
 
-                return avg_distance(distance)
-            
-    def grid_search(self):
+        return np.mean(clustering_coefficients)
+    
+    def grid_search(self, metric):
         """
         Conducts a grid search over the specified Cover parameter ranges and computes the average graph distance
         between the resulting TDA Mapper graphs using NetSimile.
@@ -145,56 +141,21 @@ class CoverTuning():
                 for k in range(0, len(bootstrap_samples)):
                     graph = self.create_tda_graph(bootstrap_samples[k], gain_current, res_current)
                     graph_list.append(graph)
+                
+                if metric == 'netsimile':
 
-                # Graph distance (NetSimile)
-                dist = self.graph_distance_metric(graph_list)
+                    # Graph distance 
+                    dist_ = self.graph_distance_metric(graph_list)
 
-                # Save results
-                matrix[i,j] = dist
+                    # Save results
+                    matrix[i,j] = dist_
+                
+                elif metric == 'clustering':
+
+                    # Clustering metric
+                    clustering_ = self.clustering_metric(graph_list)
+
+                    # Save results
+                    matrix[i,j] = clustering_
 
         return matrix
-    
-class GraphProperties(CoverTuning):
-    def __init__(self, data, projector, res, gain, seed):
-        super().__init__(data, projector, None, None, None, seed)
-        self.data = data
-        self.projector = projector
-        self.res = res
-        self.gain = gain
-        self.seed = seed
-
-    def graph_properties_stats(self):
-        """
-        Calculates statistical properties of a TDA graph based on specified Cover parameters.
-
-        Parameters:
-        - res (float): The resolution parameter determining the size of bins in the Cover
-        - gain (int): The gain parameter determining the overlap between bins in the Cover
-
-        Returns:
-        - pd.DataFrame: A DataFrame containing the statistical properties of the TDA graph
-        """
-        graph = self.create_tda_graph(self.data, self.gain, self.res)
-
-        # Graph properties
-        graph_properties = netrd.distance.netsimile.feature_extraction(graph)
-        graph_properties_signature = netrd.distance.netsimile.graph_signature(graph_properties)
-
-        graph_properties_stats = graph_properties_signature.reshape((7,5))
-        graph_properties_stats = graph_properties_stats.T
-
-        row_names = ['mean', 'median', 'std', 'skewness', 'kurtosis']
-        col_names = ['node degree', 'clustering coefficient', 'average degree of neighborhood', 
-                     'average clustering coefficient of neighborhood', 'number of edges in the neighborhood', 
-                     'number of outgoing edges from the neighborhood', 'number of neighbors of neighbors (not in neighborhood)']
-        
-        graph_properties_stats_df = pd.DataFrame(graph_properties_stats, columns=col_names, index=row_names)
-
-        return graph_properties_stats_df
-
-
-
-
-
-
-
