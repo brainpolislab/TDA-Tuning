@@ -9,4 +9,5 @@
 - **Bootstrap Sampling:** the `get_bootstrap_sample` function generates a collection of bootstrap samples from the input dataset to assess the stability of the TDA Mapper results.
 - **TDA Graph Creation:** the `create_tda_graph` function constructs a TDA Mapper graph based on the input data and specified Cover parameters.
 - **Graph Distance with Netsimile:** the `graph_distance_metric` function calculates the average NetSimile distance between a list of NetworkX graphs.
+- **Clustering coefficient computation:** the `clustering_metric` function computes the average clustering coefficient of input graphs.
 
