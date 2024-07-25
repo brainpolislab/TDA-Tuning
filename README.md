@@ -36,8 +36,8 @@ _d. Matrix integration:_ Netsimile and clustering coefficient matrices are merge
 _e. Matrix analysis and parameters combination selection:_ selection of the optimal combination of Cover parameters after an accurate matrix analysis  
 
 #### Cover parameters combination selection
-After completing the grid search, two matrices—Netsimile distances and average clustering coefficients—were generated. These matrices were combined into a unified matrix, $M$:
-$$M = \frac{{M_{Netsimile} + M_{Clustering}}}{2}$$
+After completing the grid search, two matrices—Netsimile distances and average clustering coefficients—were generated. These matrices were combined into a unified matrix, $M$:   
+$$M = \frac{{M_{Netsimile} + M_{Clustering}}}{2}$$  
 Here, $M_{Netsimile}$ is the distance matrix, and $M_{Clustering}$ is the clustering coefficient matrix. They were scaled and transformed for comparability before combining. The optimal resolution and gain parameters were identified from $M$ by selecting the lowest value, indicating stable topological properties and a good clustering coefficient. This selection was further validated through qualitative assessment of the graph's visual coherence and structural integrity.  
 This method, rooted in quantitative evaluations of topological features via bootstrapping and grid search, provides a robust approach for parameter configuration selection.
 
