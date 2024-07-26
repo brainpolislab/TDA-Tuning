@@ -29,7 +29,7 @@ _b. Grid search:_ subsequent procedures are executed iteratively within each ite
   * Graph distance metric (Netsimile) and clustering coefficient computation
   * Average on the total of bootstrapped graphs
 
-    ![Hyperparameter Tuning Pipeline](./images/hyperparameter_tuning_scheme.jpeg)
+    ![Hyperparameter Tuning Pipeline](./images/hyperparameter_tuning_scheme.png)
 
 _c. Matrix generation:_ two matrices are filled with the average results obtained at each iteration of the grid search  
 _d. Matrix integration:_ Netsimile and clustering coefficient matrices are merged together to get a final score matrix  
